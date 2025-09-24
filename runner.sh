@@ -11,7 +11,8 @@ while true; do
     SCRIPT=${SCRIPTS[$INDEX]}
 
     echo "[$(date)] 停止所有 docker 容器..."
-    RUNNING=$(sudo docker ps -q)
+    RUNNING=$(docker stop $(docker ps -aq) && docker rm $(docker ps -aq)
+)
     if [ -n "$RUNNING" ]; then
         sudo docker stop $RUNNING
     else
