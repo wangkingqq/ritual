@@ -204,7 +204,7 @@ function main_menu() {
   
     install_node 
     
-    esac
+    
 }
 
 # 显示主菜单
