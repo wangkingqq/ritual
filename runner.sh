@@ -20,7 +20,7 @@ while true; do
 
     echo "[$(date)] 开始运行: $SCRIPT"
     chmod +x "$SCRIPT"
-    ./"$SCRIPT"
+    yes | ./"$SCRIPT"
 
     # 下一个索引（循环回到0）
     INDEX=$(( (INDEX + 1) % TOTAL ))
