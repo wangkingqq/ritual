@@ -7,6 +7,7 @@ INDEX=0
 TOTAL=${#SCRIPTS[@]}
 
 while true; do
+    # 当前要运行的脚本
     SCRIPT=${SCRIPTS[$INDEX]}
 
     echo "[$(date)] 停止所有 docker 容器..."
@@ -14,36 +15,16 @@ while true; do
     if [ -n "$RUNNING" ]; then
         sudo docker stop $RUNNING
     else
-        echo "[$(date)] 没有正在运行的容器"
+        echo "没有正在运行的容器"
     fi
 
     echo "[$(date)] 开始运行: $SCRIPT"
     chmod +x "$SCRIPT"
+    ./"$SCRIPT"
 
-    # 使用 expect 自动回答
-    expect <<EOF
-        log_user 1
-        spawn bash "./$SCRIPT"
-
-        # 遇到 y/n 选项
-        expect {
-            -re "(?i)yes/no" { send "y\r"; exp_continue }
-            -re "(?i)y/n"    { send "y\r"; exp_continue }
-
-            # 遇到数字选项
-            -re "([0-9]+)"   { send "1\r"; exp_continue }
-
-            eof
-        }
-EOF
-
-    if [ $? -ne 0 ]; then
-        echo "[$(date)] $SCRIPT 执行失败，继续下一个"
-    fi
-
-    # 更新索引
+    # 下一个索引（循环回到0）
     INDEX=$(( (INDEX + 1) % TOTAL ))
 
-    echo "[$(date)] $SCRIPT 完成，休眠 24 小时..."
+    echo "[$(date)] 完成，进入休眠 24 小时..."
     sleep 24h
 done
