@@ -201,23 +201,9 @@ function check_service_status() {
 
 # 主菜单
 function main_menu() {
-    clear
-    echo "脚本以及教程由推特用户大赌哥 @y95277777 编写，免费开源，请勿相信收费"
-    echo "================================================================"
-    echo "节点社区 Telegram 群组:https://t.me/niuwuriji"
-    echo "节点社区 Telegram 频道:https://t.me/niuwuriji"
-    echo "请选择要执行的操作:"
-    echo "1. 运行节点"
-    echo "2. 查看节点日志"
-    echo "3. 设置快捷键的功能"
-    read -p "请输入选项（1-3）: " OPTION
-
-    case $OPTION in
-    1) install_node ;;
-    2) check_service_status ;;
-    3) check_and_set_alias ;;  
-    *) echo "无效选项。" ;;
-    esac
+   
+    install_node 
+    
 }
 
 # 显示主菜单
